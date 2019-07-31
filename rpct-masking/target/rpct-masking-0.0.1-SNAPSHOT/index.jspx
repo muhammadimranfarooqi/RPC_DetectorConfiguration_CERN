@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:tr="http://myfaces.apache.org/trinidad" version="1.2">
+	<jsp:directive.page contentType="text/html;charset=utf-8" />
+	<f:view>
+		<tr:document title="Strips Masking">
+			<tr:panelHeader text="Masking RPC Strips">
+				<tr:form>
+					<tr:panelGroupLayout layout="vertical">
+						<f:facet name="separator">
+							<tr:separator />
+						</f:facet>
+
+						<tr:panelBorderLayout layout="positioned"
+							inlineStyle="height: 30px; width: 100%;" rightWidth="15%">
+							<f:facet name="left">
+								<tr:outputFormatted styleUsage="instruction"
+									value="&lt;b>Select position:&lt;/b>" />
+							</f:facet>
+							<f:facet name="right">
+								<jsp:directive.include file="linkWiki.jspf"/>
+							</f:facet>
+						</tr:panelBorderLayout>
+
+						<tr:selectOneRadio label="Division" id="division"
+							partialTriggers="location" autoSubmit="true"
+							valueChangeListener="#{chamberPosition.divisionChanged}"
+							valuePassThru="true" value="#{chamberPosition.division}">
+							<tr:selectItem label="Barrel" value="BARREL"></tr:selectItem>
+							<tr:selectItem label="Endcap" value="ENDCAP"></tr:selectItem>
+						</tr:selectOneRadio>
+
+						<tr:panelFormLayout id="subdivision" partialTriggers="division section layer sector subsector etapartition location">
+							<tr:selectOneChoice label="#{chamberPosition.label[0]}"
+								id="section" value="#{chamberPosition.section}"
+								binding="#{chamberPosition.sectionUI}" autoSubmit="true"
+								valuePassThru="true"
+								valueChangeListener="#{chamberPosition.componentChanged}">
+								<f:selectItems value="#{chamberPosition.sectionList}" />
+							</tr:selectOneChoice>
+							<tr:spacer height="10" />
+
+							<tr:selectOneChoice label="#{chamberPosition.label[1]}"
+								id="layer" value="#{chamberPosition.layer}"
+								binding="#{chamberPosition.layerUI}" autoSubmit="true"
+								valuePassThru="true"
+								valueChangeListener="#{chamberPosition.componentChanged}">
+								<f:selectItems value="#{chamberPosition.layerList}" />
+							</tr:selectOneChoice>
+							<tr:spacer height="10" />
+
+							<tr:selectOneChoice label="#{chamberPosition.label[2]}"
+								id="sector" value="#{chamberPosition.sector}"
+								binding="#{chamberPosition.sectorUI}" autoSubmit="true"
+								valuePassThru="true"
+								valueChangeListener="#{chamberPosition.componentChanged}">
+								<f:selectItems value="#{chamberPosition.sectorList}" />
+							</tr:selectOneChoice>
+							<tr:spacer height="10" />
+
+							<tr:selectOneChoice label="#{chamberPosition.label[3]}"
+								id="subsector" value="#{chamberPosition.subsector}"
+								binding="#{chamberPosition.subsectorUI}" autoSubmit="true"
+								valueChangeListener="#{chamberPosition.componentChanged}"
+								valuePassThru="true"
+								rendered="#{chamberPosition.subsectorRendered}">
+								<f:selectItems value="#{chamberPosition.subsectorList}" />
+							</tr:selectOneChoice>
+							<tr:spacer height="10" />
+
+							<tr:selectOneChoice label="#{chamberPosition.label[4]}"
+								id="etapartition" value="#{chamberPosition.etaPartition}"
+								binding="#{chamberPosition.etaPartitionUI}" autoSubmit="true"
+								valueChangeListener="#{chamberPosition.componentChanged}"
+								valuePassThru="true"
+								rendered="#{chamberPosition.etaPartitionRendered}">
+								<f:selectItems value="#{chamberPosition.etaPartitionList}" />
+							</tr:selectOneChoice>
+
+							<tr:spacer height="20" />
+
+							<tr:inputText label="Or enter it" id="location"
+								value="#{chamberPosition.location}" columns="20"
+								binding="#{chamberPosition.locationUI}" autoSubmit="true"
+								valueChangeListener="#{chamberPosition.componentChanged}">
+							</tr:inputText>
+						</tr:panelFormLayout>
+
+						<tr:commandButton text="Submit"
+							action="#{chamberPosition.onSubmit}" />
+
+						<tr:panelGroupLayout layout="horizontal">
+							<tr:outputFormatted styleUsage="instruction"
+								value="&lt;b>All chambers (takes a while)&lt;/b>"
+								shortDesc="Report the masks of all chambers" />
+
+							<tr:commandButton text="report"
+								actionListener="#{chamberPosition.onReportAll}" action="reportAll" />
+						</tr:panelGroupLayout>
+					</tr:panelGroupLayout></tr:form>
+			</tr:panelHeader>
+		</tr:document>
+	</f:view>
+</jsp:root>

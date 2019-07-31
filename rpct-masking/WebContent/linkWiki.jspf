@@ -1,0 +1,5 @@
+                                <f:loadBundle basename="rpct.masking.resources.linkWiki" var="link" />
+								<tr:goLink
+									destination="#{link.destination}"
+									text="#{link.text}" targetFrame="_blank">
+								</tr:goLink>

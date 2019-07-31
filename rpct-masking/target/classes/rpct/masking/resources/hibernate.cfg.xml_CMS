@@ -1,0 +1,66 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+
+		<!--<property name="connection.url">jdbc:oracle:thin:@127.0.0.1:1521:XE</property>
+			<property name="connection.username">BILL</property>
+			<property name="connection.password">rpcconfconddb</property>-->
+
+		<!--<property name="connection.url">jdbc:oracle:thin:@oradev10.cern.ch:10520:D10</property>-->
+		<!--<property name="connection.username">CMS_ENDCAP_RPC_CONSTR</property>-->
+		<!--<property name="connection.password">wherery0u</property>-->
+
+		<!-- <property name="connection.url">jdbc:oracle:thin:@oradev10.cern.ch:10520:D10</property> -->
+<!--        <property name="connection.url">jdbc:oracle:thin:@localhost:10520:D10</property>-->
+<!--		<property name="connection.username">CMS_ENDCAP_RPCDCS_DEV</property>-->
+<!--		<property name="connection.password">1weduphyzics</property>-->
+
+<!--        <property name="connection.url">jdbc:oracle:thin:@cmsonr1-v.cms:10121/cms_omds_lb.cern.ch</property>-->
+        <property name="connection.url"><![CDATA[jdbc:oracle:thin:@
+            (DESCRIPTION =
+                (ADDRESS = (PROTOCOL = TCP)(HOST = cmsonr1-v)(PORT =10121))
+                (ADDRESS = (PROTOCOL = TCP)(HOST = cmsonr2-v)(PORT =10121))
+                (ADDRESS = (PROTOCOL = TCP)(HOST = cmsonr3-v)(PORT =10121))
+                (ADDRESS = (PROTOCOL = TCP)(HOST = cmsonr4-v)(PORT =10121))
+                (ADDRESS = (PROTOCOL = TCP)(HOST = cmsonr5-v)(PORT =10121))
+                (ADDRESS = (PROTOCOL = TCP)(HOST = cmsonr6-v)(PORT =10121))
+                (ENABLE=BROKEN)
+                (LOAD_BALANCE = yes)
+                (CONNECT_DATA =
+                    (SERVER = DEDICATED)
+                    (SERVICE_NAME = cms_omds_lb.cern.ch)
+                    (FAILOVER_MODE = (TYPE = SELECT)(METHOD = BASIC)(RETRIES = 200)(DELAY= 15))
+                )
+            )]]></property>        
+        <property name="connection.username">CMS_RPC_CONF</property>
+        <property name="connection.password">rbc_rb+2_s!!</property> 
+
+		<property name="dialect">org.hibernate.dialect.Oracle9Dialect</property>
+
+		<!-- Use the C3P0 connection pool. -->
+		<!--<property name="c3p0.min_size">1</property>
+		<property name="c3p0.max_size">3</property>
+		<property name="c3p0.timeout">600</property>
+		-->
+		<!-- Disable second-level cache. -->
+		<!-- <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+		<property name="cache.use_query_cache">false</property>
+		<property name="cache.use_minimal_puts">false</property>
+		<property name="max_fetch_depth">3</property> -->
+
+		<!-- Print SQL to stdout. -->
+<!--		<property name="show_sql">true</property>-->
+<!--		<property name="format_sql">true</property>-->
+
+		<!-- Bind the getCurrentSession() method to the thread. -->
+		<!-- <property name="current_session_context_class">thread</property> -->
+
+		<!-- Hibernate Annotations (and package-info.java)
+			<mapping package="org.mypackage"/>
+			<mapping class="org.MyClass/>
+		-->
+	</session-factory>
+</hibernate-configuration>

@@ -1,0 +1,85 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+		<!--
+			<property
+			name="connection.url">jdbc:oracle:thin:@127.0.0.1:1521:XE</property>
+			<property name="connection.username">BILL</property> <property
+			name="connection.password">rpcconfconddb</property>
+		-->
+		<!--
+			<property
+			name="connection.url">jdbc:oracle:thin:@localhost:1522:CMSOMDS</property>
+		-->
+		<!--
+			<property
+			name="connection.url">jdbc:oracle:thin:@oradev10.cern.ch:10520:D10</property>
+		-->
+		<!--
+			<property name="connection.username">CMS_ENDCAP_RPC_CONSTR</property>
+		-->
+		<!--<property name="connection.password">timei5now</property>-->
+
+		<!--
+			<property
+			name="connection.url">jdbc:oracle:thin:@localhost:10520:D10</property>
+		-->
+		<!--
+			<property
+			name="connection.url">jdbc:oracle:thin:@oradev10.cern.ch:10520:D10</property>
+		-->
+		<!--
+			<property name="connection.username">CMS_ENDCAP_RPCDCS_DEV</property>
+		-->
+		<!--
+			<property name="connection.password">1weduphyzics</property>
+		-->
+
+		<!--
+			<property
+			name="connection.url">jdbc:oracle:thin:@oracms.cern.ch:10121:OMDS</property>
+		-->
+		<!--
+			<property name="connection.username">RPC_CONFIGURATION</property>
+		-->
+		<!--
+			<property name="connection.password">rpcconfconddb</property>
+		-->
+
+		<!--
+			<property
+			name="connection.url">jdbc:oracle:thin:@cmsonr1-v.cms:10121/cms_omds_lb.cern.ch</property>
+			<property name="connection.username">CMS_RPC_CONF</property>
+			<property name="connection.password">rpcconfconddb</property>
+		-->
+
+
+		<!--
+			<property
+			name="connection.url">jdbc:oracle:thin:@oradev10.cern.ch:10520:D10</property>
+		-->
+
+		<!--
+			<property
+			name="connection.url">jdbc:oracle:thin:@localhost:10520:D10</property>
+		-->
+		<property name="connection.url">jdbc:oracle:thin:@oradev10.cern.ch:10520:D10</property>
+
+		<!--
+			<property name="connection.url"><![CDATA[jdbc:oracle:thin:@ (
+			DESCRIPTION= (ADDRESS= (PROTOCOL=TCP) (HOST=oradev10.cern.ch)
+			(PORT=10520) ) (ENABLE=BROKEN) (CONNECT_DATA= (SID=D10) )
+			)]]></property>
+		-->
+
+		<property name="connection.username">CMS_RPC_TRIGGER_DEV</property>
+		<property name="connection.password">RPitfyo25</property>
+
+
+		<property name="dialect">org.hibernate.dialect.OracleDialect</property>
+		<!--                <property name="show_sql">true</property>-->
+	</session-factory>
+</hibernate-configuration>

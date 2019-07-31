@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:tr="http://myfaces.apache.org/trinidad" version="1.2">
+	<jsp:directive.page contentType="text/html;charset=utf-8" />
+	<f:view>
+		<tr:document title="Strips Masking: All chambers">
+			<tr:panelHeader text="Masking RPC Strips">
+				<tr:form>
+					<tr:panelGroupLayout layout="vertical">
+						<f:facet name="separator">
+							<tr:separator />
+						</f:facet>
+
+						<tr:panelBorderLayout layout="positioned"
+							inlineStyle="height: 30px; width: 100%;" rightWidth="15%">
+							<f:facet name="left">
+								<tr:outputFormatted styleUsage="instruction"
+									value="&lt;b>Reporting on #{chambersReport.startDate}&lt;/b>" />
+							</f:facet>
+							<f:facet name="right">
+								<jsp:directive.include file="linkWiki.jspf" />
+							</f:facet>
+						</tr:panelBorderLayout>
+
+						<tr:panelHeader text="Chambers" />
+						<tr:table value="#{chambersReport.allChambers}" var="ch"
+							varStatus="rowstat" rowBandingInterval="1" rows="0" id="chtable">
+							<tr:column>
+								<f:facet name="header">
+									<tr:outputText value="#" />
+								</f:facet>
+
+								<tr:outputText value="#{rowstat.index + 1}" />
+							</tr:column>
+
+							<tr:column sortProperty="id" sortable="true">
+								<f:facet name="header">
+									<tr:outputText value="id" />
+								</f:facet>
+								<tr:outputText value="#{ch.id}" />
+							</tr:column>
+
+							<tr:column sortProperty="name" sortable="true">
+								<f:facet name="header">
+									<tr:outputText value="name" />
+								</f:facet>
+								<tr:outputText value="#{ch.name}" />
+							</tr:column>
+
+							<tr:column sortProperty="LBoardName" sortable="true">
+								<f:facet name="header">
+									<tr:outputText value="LB name" />
+								</f:facet>
+								<tr:outputText value="#{ch.LBoardName}" />
+							</tr:column>
+
+							<tr:column align="right">
+								<f:facet name="header">
+									<tr:outputText value="enabled strips" />
+								</f:facet>
+								<tr:outputText value="#{ch.enabledStripsMask}" />
+							</tr:column>
+						</tr:table>
+
+
+						<tr:panelHeader text="LinkBoards" />
+						<tr:table value="#{chambersReport.allLBoards}" var="lb"
+							varStatus="rowstat" rowBandingInterval="1" rows="0" id="lbtable">
+							<tr:column>
+								<f:facet name="header">
+									<tr:outputText value="#" />
+								</f:facet>
+
+								<tr:outputText value="#{rowstat.index + 1}" />
+							</tr:column>
+
+							<tr:column sortProperty="id" sortable="true">
+								<f:facet name="header">
+									<tr:outputText value="id" />
+								</f:facet>
+								<tr:outputText value="#{lb.id}" />
+							</tr:column>
+
+							<tr:column sortProperty="name" sortable="true">
+								<f:facet name="header">
+									<tr:outputText value="name" />
+								</f:facet>
+								<tr:outputText value="#{lb.name}" />
+							</tr:column>
+
+							<tr:column>
+								<f:facet name="header">
+									<tr:outputText value="connectedChannelsMask" />
+								</f:facet>
+								<tr:outputFormatted
+									value="&lt;tt>#{lb.connectedChannelsMask}&lt;/tt>" />
+							</tr:column>
+
+							<tr:column>
+								<f:facet name="header">
+									<tr:outputText value="enabledChannelsMask" />
+								</f:facet>
+								<tr:outputFormatted
+									value="&lt;tt>#{lb.enabledChannelsMask}&lt;/tt>" />
+							</tr:column>
+						</tr:table>
+
+						<tr:outputFormatted styleUsage="instruction"
+							value="&lt;b>Generated on #{chambersReport.date}&lt;/b>" />
+					</tr:panelGroupLayout>
+				</tr:form>
+			</tr:panelHeader>
+		</tr:document>
+	</f:view>
+</jsp:root>

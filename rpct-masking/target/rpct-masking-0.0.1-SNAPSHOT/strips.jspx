@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:tr="http://myfaces.apache.org/trinidad" version="1.2"
+	xmlns:h="http://java.sun.com/jsf/html">
+	<jsp:directive.page contentType="text/html;charset=utf-8" />
+	<f:view>
+		<tr:document title="Strips Masking: strips selection">
+			<tr:panelHeader text="Masking RPC strips" />
+			<tr:form>
+				<tr:panelGroupLayout layout="vertical">
+					<f:facet name="separator">
+						<tr:separator />
+					</f:facet>
+
+					<tr:panelBorderLayout layout="positioned"
+						inlineStyle="height: 30px; width: 100%;" rightWidth="15%">
+						<f:facet name="left">
+							<tr:outputFormatted styleUsage="instruction"
+								value="Select strips of &lt;b>#{pageFlowScope.chamberPosition.location}:&lt;/b>" />
+						</f:facet>
+						<f:facet name="right">
+								<jsp:directive.include file="linkWiki.jspf"/>
+						</f:facet>
+					</tr:panelBorderLayout>
+
+					<tr:panelHorizontalLayout valign="top" id="mainpanel">
+						<tr:panelGroupLayout layout="vertical" id="strips">
+							<f:facet name="separator">
+								<tr:spacer width="1" height="10" />
+							</f:facet>
+							<tr:outputFormatted value="&lt;b>Strips&lt;/b>" shortDesc="check a box to enable the strip" />
+
+							<tr:table value="#{mask.tableRows}" varStatus="rowstat"
+								rowBandingInterval="1" id="stripstable"
+								partialTriggers="::maskmapper ::labels ::btnEnableAll_0 ::btnEnableAll_1 ::btnEnableAll_2 ::btnDisableAll_0 ::btnDisableAll_1 ::btnDisableAll_2">
+								<tr:column>
+									<tr:outputText value="#{rowstat.index}" />
+								</tr:column>
+								<tr:forEach begin="0" end="#{mask.numberOfColumns - 1}"
+									varStatus="colstat">
+									<tr:column>
+										<f:facet name="header">
+											<tr:outputText value="#{colstat.index}" />
+										</f:facet>
+										<tr:selectBooleanCheckbox
+											value="#{mask.stripBits[rowstat.index * mask.numberOfColumns + colstat.index].value}"
+											shortDesc="#{mask.stripBits[rowstat.index * mask.numberOfColumns + colstat.index].name}"
+											rendered="#{rowstat.index * mask.numberOfColumns + colstat.index >= 1 and rowstat.index * mask.numberOfColumns + colstat.index &lt;= mask.numberOfStrips}"
+											disabled="#{not mask.stripBitsConnected[rowstat.index * mask.numberOfColumns + colstat.index].value}">
+										</tr:selectBooleanCheckbox>
+
+										<tr:outputText
+											value="#{mask.stripBits[rowstat.index * mask.numberOfColumns + colstat.index].name}"
+											rendered="#{mask.numbersOn and rowstat.index * mask.numberOfColumns + colstat.index >= 1 and rowstat.index * mask.numberOfColumns + colstat.index &lt;= mask.numberOfStrips and mask.stripBitsConnected[rowstat.index * mask.numberOfColumns + colstat.index].value}">
+										</tr:outputText>
+									</tr:column>
+								</tr:forEach>
+							</tr:table>
+						</tr:panelGroupLayout>
+
+						<tr:spacer width="50" />
+
+						<tr:panelGroupLayout layout="vertical" id="views">
+							<f:facet name="separator">
+								<tr:spacer width="1" height="10" />
+							</f:facet>
+
+							<tr:outputFormatted value="&lt;b>View&lt;/b>" />
+							<tr:selectOneRadio label="Data type: " id="maskmapper"
+								shortDesc="What the numbers correspond to" autoSubmit="true"
+								valueChangeListener="#{mask.maskMapperChanged}"
+								value="#{mask.maskMapper}">
+								<tr:selectItem label="Strip" value="STRIP" shortDesc="strip" />
+								<tr:selectItem label="CMS Strip" value="STRIPCMS"
+									shortDesc="cmsstrip" />
+								<tr:selectItem label="Channel" value="CHANNEL"
+									shortDesc="LB input channel" />
+							</tr:selectOneRadio>
+
+							<tr:selectBooleanCheckbox label="Labels" id="labels"
+								shortDesc="Show the strip/channel number to the checkbox"
+								autoSubmit="true" value="#{mask.numbersOn}" />
+						</tr:panelGroupLayout>
+
+						<tr:spacer width="50" />
+
+						<tr:panelGroupLayout layout="vertical" id="bulkops">
+							<f:facet name="separator">
+								<tr:spacer width="1" height="10" />
+							</f:facet>
+
+							<tr:outputFormatted value="&lt;b>Bulk Operations&lt;/b>" />
+
+							<tr:outputText value="Enable all of eta part." />
+							<tr:panelGroupLayout layout="horizontal" id="enableall">
+								<tr:commandButton id="btnEnableAll_0"
+									rendered="#{mask.numberOfEtaPartitions > 0}"
+									text="#{mask.etaPartitions[0]}"
+									actionListener="#{mask.doAllOfEtaPartition}"
+									partialSubmit="true">
+								</tr:commandButton>
+								<tr:spacer width="10" />
+								<tr:commandButton id="btnEnableAll_1"
+									rendered="#{mask.numberOfEtaPartitions > 1}"
+									text="#{mask.etaPartitions[1]}"
+									actionListener="#{mask.doAllOfEtaPartition}"
+									partialSubmit="true">
+								</tr:commandButton>
+								<tr:spacer width="10" />
+								<tr:commandButton id="btnEnableAll_2"
+									rendered="#{mask.numberOfEtaPartitions > 2}"
+									text="#{mask.etaPartitions[2]}"
+									actionListener="#{mask.doAllOfEtaPartition}"
+									partialSubmit="true">
+								</tr:commandButton>
+							</tr:panelGroupLayout>
+
+							<tr:spacer height="10" />
+
+							<tr:outputText value="Disable all of eta part." />
+							<tr:panelGroupLayout layout="horizontal" id="disableall">
+								<tr:commandButton id="btnDisableAll_0"
+									rendered="#{mask.numberOfEtaPartitions > 0}"
+									text="#{mask.etaPartitions[0]}"
+									actionListener="#{mask.doAllOfEtaPartition}"
+									partialSubmit="true">
+								</tr:commandButton>
+								<tr:spacer width="10" />
+								<tr:commandButton id="btnDisableAll_1"
+									rendered="#{mask.numberOfEtaPartitions > 1}"
+									text="#{mask.etaPartitions[1]}"
+									actionListener="#{mask.doAllOfEtaPartition}"
+									partialSubmit="true">
+								</tr:commandButton>
+								<tr:spacer width="10" />
+								<tr:commandButton id="btnDisableAll_2"
+									rendered="#{mask.numberOfEtaPartitions > 2}"
+									text="#{mask.etaPartitions[2]}"
+									actionListener="#{mask.doAllOfEtaPartition}"
+									partialSubmit="true">
+								</tr:commandButton>
+							</tr:panelGroupLayout>
+						</tr:panelGroupLayout>
+
+						<tr:spacer width="50" />
+
+						<tr:panelGroupLayout layout="vertical" id="history">
+							<f:facet name="separator">
+								<tr:spacer width="1" height="10" />
+							</f:facet>
+							<tr:outputFormatted value="&lt;b>History&lt;/b>" />
+							<tr:table value="#{mask.maskModifications}" var="row" rows="10"
+								rowBandingInterval="1">
+								<tr:column noWrap="true"
+									sortProperty="formattedModified" sortable="true">
+									<f:facet name="header">
+										<tr:outputText value="Date modified"
+											shortDesc="Click to change the sort order" />
+									</f:facet>
+									<tr:outputText value="#{row.formattedModified}" />
+								</tr:column>
+								<tr:column noWrap="true" headerText="Mask">
+									<tr:outputText value="#{row.paramVal}" />
+								</tr:column>
+								<tr:column noWrap="true"
+									sortProperty="lckName" sortable="true">
+									<f:facet name="header">
+										<tr:outputText value="LclCfgKey"
+											shortDesc="Click to change the sort order" />
+									</f:facet>
+									<tr:outputText value="#{row.lckName}" />
+								</tr:column>
+							</tr:table>
+						</tr:panelGroupLayout>
+					</tr:panelHorizontalLayout>
+
+					<tr:panelGroupLayout layout="horizontal">
+						<tr:commandButton text="Commit" actionListener="#{mask.saveMask}"
+							shortDesc="Commit to DB" />
+						<tr:spacer width="30" />
+						<tr:resetButton text="Reset" shortDesc="Reset user's changes" />
+						<tr:spacer width="30" />
+						<!-- TODO: use server variable instead of literal host name -->
+						<tr:goButton textAndAccessKey="&amp;Back" shortDesc="Go back to the front page" destination = "http://128.141.86.25:28080/rpct-masking/"/>
+					</tr:panelGroupLayout>
+
+					<tr:outputDocument id="log" value="#{mask.logtxt}"
+						partialTriggers="maskmapper">
+						<f:facet name="title">
+							<tr:panelHeader text="Log" />
+						</f:facet>
+					</tr:outputDocument>
+				</tr:panelGroupLayout>
+			</tr:form>
+		</tr:document>
+	</f:view>
+</jsp:root>

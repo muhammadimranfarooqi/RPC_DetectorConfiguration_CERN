@@ -1,0 +1,17 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+
+<property name="hibernate.connection.driver_class">com.microsoft.jdbc.sqlserver.SQLServerDriver</property> 
+<property name="hibernate.connection.url">jdbc:microsoft:sqlserver://localhost:1433/rpct-db</property> 
+<property name="hibernate.connection.username">sa</property> 
+<property name="hibernate.connection.password">DB@ncp</property> 
+<property name="hibernate.connection.pool_size">10</property> 
+<property name="show_sql">true</property> 
+<property name="dialect">org.hibernate.dialect.SQLServerDialect</property> 
+<property name="hibernate.hbm2ddl.auto">create</property> 
+
+</session-factory>
+</hibernate-configuration>

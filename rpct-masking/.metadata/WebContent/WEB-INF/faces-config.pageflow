@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf12483765022000" configfile="/rpct-masking/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="index" x="115" y="119" id="pf12484735436260" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf12484735436271 pf12518849378902" path="/index.jspx"/>
+  <nodes xsi:type="pageflow:PFPage" name="strips" x="348" y="119" id="pf12484735436272" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf12484735436271" path="/strips.jspx"/>
+  <nodes xsi:type="pageflow:PFPage" name="chambers" x="110" y="312" id="pf12518849378903" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf12518849378902" path="/chambers.jspx"/>
+  <links id="pf12484735436271" target="pf12484735436272" source="pf12484735436260" outcome="select"/>
+  <links id="pf12518849378902" target="pf12518849378903" source="pf12484735436260" outcome="reportAll"/>
+</pageflow:Pageflow>
